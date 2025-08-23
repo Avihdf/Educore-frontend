@@ -52,6 +52,8 @@ const Edu_Navbar = () => {
         }
     }
 
+    console.log(user.profile_picture)
+
     return (
         <div className="fixed left-0 top-0 w-full z-50">
             {/* Main Navbar */}
@@ -233,10 +235,11 @@ const Edu_Navbar = () => {
                             >
                                 {user.profile_picture ? (
                                     <img
-                                        src={`http://localhost:8080/uploads/${user.profile_picture}`}
+                                        src={user.profile_picture}
                                         alt="Profile"
                                         className="w-8 h-8 rounded-full object-cover"
                                     />
+
                                 ) : (
                                     <FaCircleUser className="text-[30px]" />
                                 )}
