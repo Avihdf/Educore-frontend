@@ -112,10 +112,11 @@ const Edu_Navbar = () => {
                                     {user.profile_picture ? (
 
                                         <img
-                                            src={`${api_url}/uploads/${user.profile_picture}`}
+                                            src={user.profile_picture}
                                             alt="Profile"
                                             className="w-8 h-8 rounded-full object-cover"
                                         />
+
                                     ) : (
                                         <FaCircleUser className="text-[30px]" />
                                     )}
