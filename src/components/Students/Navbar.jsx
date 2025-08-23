@@ -52,7 +52,6 @@ const Edu_Navbar = () => {
         }
     }
 
-    console.log(user.profile_picture)
 
     return (
         <div className="fixed left-0 top-0 w-full z-50">
