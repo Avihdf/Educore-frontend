@@ -46,7 +46,7 @@ const CourseWiseEnroll = () => {
                                 className="bg-gray-700 rounded-lg shadow-lg overflow-hidden hover:scale-[1.02] transition-transform"
                             >
                                 <img
-                                    src={c.thumbnail ? `${api_url}/${c.thumbnail}` : "/placeholder.jpg"}
+                                    src={c.thumbnail ? c.thumbnail : "/placeholder.jpg"}
                                     alt={c.coursetitle}
                                     className="w-full h-40 object-cover"
                                 />

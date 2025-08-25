@@ -16,12 +16,36 @@ const Profile = () => {
         return d.toISOString().split('T')[0];
     };
 
+    const Spinner = () => (
+        <svg
+            className="animate-spin h-5 w-5 text-white mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+            ></circle>
+            <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+            ></path>
+        </svg>
+    );
+
+
     // ✅ Fix preview to show Cloudinary URL if it's already a full URL
     const [previewImage, setPreviewImage] = useState(
         user?.profile_picture
             ? user.profile_picture.startsWith('http')
                 ? user.profile_picture
-                : `${api_url}/uploads/${user.profile_picture}`
+                : user.profile_picture
             : null
     );
 
@@ -108,7 +132,7 @@ const Profile = () => {
                 setPreviewImage(
                     res.data.profile_picture.startsWith('http')
                         ? res.data.profile_picture
-                        : `${api_url}/uploads/${res.data.profile_picture}`
+                        : res.data.profile_picture
                 );
             }
         } catch (err) {
@@ -149,11 +173,11 @@ const Profile = () => {
 
     return (
         <div className="flex flex-col justify-center items-center mt-5 w-full max-w-xxl">
-            {isUpdating && (
+            {/* {isUpdating && (
                 <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     <Loading />
                 </div>
-            )}
+            )} */}
 
             {/* Tabs */}
             <div className="flex justify-center gap-6 mt-[5px]">
@@ -229,9 +253,25 @@ const Profile = () => {
                     />
                     <br />
 
-                    <button className="border-1 border-gray-800 w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">
-                        Update Profile
+                    <button
+                        type="submit"
+                        disabled={isUpdating}
+                        className={`flex items-center justify-center border-1 border-gray-800 w-full py-3 mt-4 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg
+        ${isUpdating
+                                ? 'bg-gray-600 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700'}`}
+                    >
+                        {isUpdating ? (
+                            <>
+                                <Spinner /> Updating...
+                            </>
+                        ) : (
+                            'Update Profile'
+                        )}
                     </button>
+
+
+
                 </form>
             )}
 
@@ -265,9 +305,23 @@ const Profile = () => {
                     />
                     <br />
 
-                    <button className="border-1 border-gray-800 w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">
-                        Change Password
+                    <button
+                        type="submit"
+                        disabled={isUpdating}
+                        className={`flex items-center justify-center border-1 border-gray-800 w-full py-3 mt-4 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg
+        ${isUpdating
+                                ? 'bg-gray-600 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700'}`}
+                    >
+                        {isUpdating ? (
+                            <>
+                                <Spinner /> Updating...
+                            </>
+                        ) : (
+                            'Update Profile'
+                        )}
                     </button>
+
                 </form>
             )}
 

@@ -249,7 +249,8 @@ const CoursesEdit = () => {
                         {existingThumbnail && !thumbnail && (
                             <div className="mt-2">
                                 <img
-                                    src={assetURL(existingThumbnail)}
+                                    // src={assetURL(existingThumbnail)}
+                                    src={existingThumbnail}
                                     alt="Current Thumbnail"
                                     className="w-20 h-20 object-cover rounded-lg border border-sky-400"
                                 />

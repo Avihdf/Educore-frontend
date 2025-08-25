@@ -122,7 +122,8 @@ const CourseDetails = () => {
                 <div className="w-full lg:w-2/3 flex justify-center items-start">
                     {coursedetail.thumbnail && (
                         <img
-                            src={assetURL(coursedetail.thumbnail)}
+                            // src={assetURL(coursedetail.thumbnail)}
+                            src={coursedetail.thumbnail}
                             alt={coursedetail.coursetitle}
                             className="w-full max-h-[300px] sm:max-h-[400px] md:max-h-[500px] object-cover rounded-lg shadow-lg"
                         />

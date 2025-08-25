@@ -192,7 +192,7 @@ const MyCourses = () => {
                                 {/* Thumbnail */}
                                 <div className="relative w-full h-48 md:w-72 md:h-auto overflow-hidden bg-gray-800">
                                     <img
-                                        src={assetURL(course.thumbnail)}
+                                        src={course.thumbnail}
                                         alt={course.coursetitle}
                                         className="w-full h-full object-cover object-center group-hover:scale-105 transition duration-700"
                                         onError={(e) => (e.target.style.display = 'none')}

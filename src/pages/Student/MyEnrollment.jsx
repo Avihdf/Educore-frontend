@@ -105,7 +105,8 @@ export default function MyEnrollment() {
                     {userdetail?.profile_picture ? (
                         <img
                             className="w-16 h-16 rounded-full border-4 border-none object-cover"
-                            src={`${api_url}/uploads/${user.profile_picture}`}
+                            // src={`${api_url}/uploads/${user.profile_picture}`}
+                            src={user.profile_picture}
                             alt={userdetail.name}
                         />
                     ) : (
@@ -175,7 +176,8 @@ export default function MyEnrollment() {
                                     {/* Card Image */}
                                     <div className="relative h-48 overflow-hidden">
                                         <img
-                                            src={assetURL(course.thumbnail)}
+                                            // src={assetURL(course.thumbnail)}
+                                            src={course.thumbnail}
                                             alt={course.coursetitle}
                                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                                         />

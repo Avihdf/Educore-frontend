@@ -11,7 +11,7 @@ const EducatorProfile = () => {
     const { admin, loading, admindetails } = useauth();
     const [isUpdating, setIsUpdating] = useState(false);
 
-     const api_url = import.meta.env.VITE_API_BASE_URL;
+    const api_url = import.meta.env.VITE_API_BASE_URL;
 
 
     const formatDate = (date) => {
@@ -20,8 +20,32 @@ const EducatorProfile = () => {
         return d.toISOString().split('T')[0]; // YYYY-MM-DD
     };
 
+    const Spinner = () => (
+        <svg
+            className="animate-spin h-5 w-5 text-white mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+            ></circle>
+            <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+            ></path>
+        </svg>
+    );
+
+
     const [previewImage, setPreviewImage] = useState(
-        admin?.profile_picture ? `${api_url}/uploads/${admin.profile_picture}` : null
+        admin?.profile_picture ? admin.profile_picture : null
     );
 
     const [updateprofile, setupdateprofile] = useState({
@@ -116,7 +140,8 @@ const EducatorProfile = () => {
             setmessage(res.data.message);
             await admindetails();
             if (res.data.profile_picture) {
-                setPreviewImage(`${api_url}/uploads/${res.data.profile_picture}`);
+                // setPreviewImage(`${api_url}/uploads/${res.data.profile_picture}`);
+                setPreviewImage(res.data.profile_picture);
             }
         } catch (err) {
             console.log(err);
@@ -156,18 +181,11 @@ const EducatorProfile = () => {
     };
 
 
-if (isUpdating) {
-    <Loadingeduactor/>
-}
+    // if (isUpdating) {
+    //     <Loadingeduactor />
+    // }
 
     return (
-        // <div className="relative w-full">
-        //     {/* Full-screen overlay when updating */}
-        //     {isUpdating && (
-        //         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        //             <Loading />
-        //         </div>
-        //     )}
 
         <div className="flex flex-col justify-center items-center mt-5 w-full max-w-xxl">
             <div className="flex justify-center gap-6 mt-[5px]">
@@ -246,8 +264,21 @@ if (isUpdating) {
                     <br />
 
 
-                    <button className="border-1 border-gray-800 w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">
-                        Update Profile
+                    <button
+                        type="submit"
+                        disabled={isUpdating}
+                        className={`flex items-center justify-center border-1 border-gray-800 w-full py-3 mt-4 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg
+        ${isUpdating
+                                ? 'bg-gray-600 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700'}`}
+                    >
+                        {isUpdating ? (
+                            <>
+                                <Spinner /> Updating...
+                            </>
+                        ) : (
+                            'Update Profile'
+                        )}
                     </button>
 
                 </form>
@@ -278,7 +309,21 @@ if (isUpdating) {
 
 
                     <button
-                        className="border-1 border-gray-800 w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">Change Password</button>
+                        type="submit"
+                        disabled={isUpdating}
+                        className={`flex items-center justify-center border-1 border-gray-800 w-full py-3 mt-4 rounded-xl text-white font-semibold transition-all duration-300 shadow-lg
+        ${isUpdating
+                                ? 'bg-gray-600 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700'}`}
+                    >
+                        {isUpdating ? (
+                            <>
+                                <Spinner /> Updating...
+                            </>
+                        ) : (
+                            'Update Profile'
+                        )}
+                    </button>
 
                 </form>
             )}
@@ -297,7 +342,7 @@ if (isUpdating) {
                 </div>
             )}
         </div>
-        // </div>
+
     );
 };
 

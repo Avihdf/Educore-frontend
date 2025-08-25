@@ -52,7 +52,7 @@ const StudentEnrollment = () => {
                                     
                                     {student.profile_picture ? (
                                         <img
-                                            src={`${api_url}/uploads/${student.profile_picture}`}
+                                            src={student.profile_picture}
                                             alt="Profile"
                                             className="w-10 h-10 rounded-full object-cover border border-white"
                                         />

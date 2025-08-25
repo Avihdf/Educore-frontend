@@ -4,6 +4,13 @@ const api_url = import.meta.env.VITE_API_BASE_URL;
 
 const assetURL = (path) => {
   if (!path) return '';
+
+  // If it's already a full URL (Cloudinary or other)
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+
+  // Otherwise, treat it as local storage
   const normalized = path.replace(/\\/g, '/');
   const filename = normalized.split('/').pop();
   return `${api_url}/coursesuploads/${filename}`;

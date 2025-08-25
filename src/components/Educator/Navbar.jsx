@@ -27,7 +27,8 @@ const Edu_Navbar = () => {
                         <div className='flex gap-2 items-center'>
                             {admin.profile_picture ? (
                                 <img
-                                    src={`${api_url}/uploads/${admin.profile_picture}`}
+                                    // src={`${api_url}/uploads/${admin.profile_picture}`}
+                                    src={admin.profile_picture}
                                     alt="Profile"
                                     className="w-8 h-8 rounded-full object-cover"
                                 />

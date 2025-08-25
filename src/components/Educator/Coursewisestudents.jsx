@@ -71,7 +71,8 @@ const Coursewisestudents = () => {
                                 <h3 className="text-xl font-semibold flex items-center gap-2">
                                     {item.student.profile_picture ? (
                                         <img
-                                            src={`${api_url}/uploads/${item.student.profile_picture}`}
+                                            // src={`${api_url}/uploads/${item.student.profile_picture}`}
+                                            src={item.student.profile_picture}
                                             alt="Profile"
                                             className="w-10 h-10 rounded-full object-cover border border-white"
                                         />
