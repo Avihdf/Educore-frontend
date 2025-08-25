@@ -6,8 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Companies from '../../components/Students/Companies';
 import Hero from '../../components/Students/Hero';
 import Courses from '../../components/Students/Courses';
-import CircleCard from '../../components/Students/CircleCard';
-import ThreeCardLayout from '../../components/Students/CircleCard';
+
 
 const Home = () => {
   const location = useLocation();
@@ -84,7 +83,7 @@ const Home = () => {
 
       {/* Hero Section */}
       <Hero />
-      <ThreeCardLayout/>
+      
    
 
       {/* Concept Section */}
