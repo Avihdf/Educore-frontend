@@ -36,7 +36,7 @@ const CoursesEdit = () => {
     // 1. Fetch course details
     useEffect(() => {
         setisLoading(true)
-        axios.get(`${api_url}/api/course/${id}`,{withCredentials: true })
+        axios.get(`${api_url}/api/course/${id}`, { withCredentials: true })
             .then((res) => {
                 const course = res.data.coursedetail;
                 setcoursetitle(course.coursetitle);
@@ -60,7 +60,7 @@ const CoursesEdit = () => {
 
         try {
             const res = await axios.delete(`${api_url}/api/course/${id}/chapters/${chapterId}`,
-                {withCredentials: true });
+                { withCredentials: true });
             setChapters(res.data.chapters);
         } catch (err) {
             console.log(err)
@@ -107,15 +107,18 @@ const CoursesEdit = () => {
 
         // 🔹 Add new chapters
         newChapters.forEach((ch, index) => {
-            formData.append(`newChapters[${index}][chaptername]`, ch.name);
-            formData.append(`newChapters[${index}][chapterduration]`, ch.duration);
+            formData.append('newChapters', JSON.stringify(newChapters.map(chapter => ({
+                chaptername: chapter.name,
+                chapterduration: chapter.duration
+            }))));
 
             if (ch.videos && ch.videos.length > 0) {
                 ch.videos.forEach((file) => {
-                    formData.append(`newChapters[${index}][chaptervideos]`, file);
+                    formData.append(`newChapters_${index}`, file);
                 });
             }
         });
+
 
 
         try {

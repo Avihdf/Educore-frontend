@@ -60,6 +60,7 @@ export default function MyEnrollment() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+     
         if (!user || !user._id) return;
         const fetchEnrollments = async () => {
             try {
@@ -143,6 +144,7 @@ export default function MyEnrollment() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">
                         {enrollments.map((enrollment) => {
                             const course = enrollment.course_id;
+                            if (!course) return null;
                             const totalVideos = getTotalVideos(course.chapters);
                             // Calculate chapters completed (video chapters as completed proxy)
                           
