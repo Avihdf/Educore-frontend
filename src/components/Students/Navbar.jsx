@@ -11,7 +11,7 @@ import { HiOutlineLogout } from 'react-icons/hi';
 
 const Edu_Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { user, setuser, loading } = useauth()
+    const { user, setUser, loading } = useauth()
     const [dropdownmenu, setdropdownmenu] = useState(false)
     const [mobileDropdownMenu, setMobileDropdownMenu] = useState(false);
 
@@ -44,11 +44,21 @@ const Edu_Navbar = () => {
     const handlelogout = async (e) => {
         try {
             const res = await axios.get(`${api_url}/api/student/logout`,
-                { withCredentials: true })
+                { withCredentials: true }
+            )
+
+            // Clear user state
+            setUser(null);
+
+            // Also clear from local storage/session storage if used
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
+
+
             navigate('/login', { state: { message: res.data.message } });
-            window.location.reload();
+            // window.location.reload();
         } catch (err) {
-            console.log(err)
+            console.error('Logout error:', err);
         }
     }
 
