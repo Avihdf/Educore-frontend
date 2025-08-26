@@ -49,7 +49,7 @@ const EnrollStudent = () => {
             setisLoading(true)
             const response = await axios.get(
                 `${api_url}/api/enrollstudent-search?email=${encodeURIComponent(searchEmail)}`,
-                 { withCredentials: true }
+                { withCredentials: true }
             );
             setEnrollStudentList(response.data.students || []);
             seterror('');
@@ -57,7 +57,7 @@ const EnrollStudent = () => {
             console.error('Search error:', err);
             setEnrollStudentList([]);
             seterror(err.response?.data?.error || 'No students found with this email');
-        }finally{
+        } finally {
             setisLoading(false)
         }
     };
@@ -72,8 +72,8 @@ const EnrollStudent = () => {
     }
 
     if (isLoading) {
-        return(
-            <Loadingeduactor/>
+        return (
+            <Loadingeduactor />
         )
     }
 
@@ -104,7 +104,7 @@ const EnrollStudent = () => {
                 </form>
             </div>
 
-           
+
 
 
 
@@ -114,14 +114,13 @@ const EnrollStudent = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
                     {enrollstudentlist.map((item, index) => (
                         <div
-                            key={item.enrollment._id}
+                            key={item?.enrollment?._id || index}
                             className="bg-gray-900 text-white rounded-2xl shadow-lg border border-gray-700 p-6 flex flex-col gap-2 hover:shadow-2xl transition-all"
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    {item.student.profile_picture ? (
+                                    {item?.student?.profile_picture ? (
                                         <img
-                                            // src={`${api_url}/uploads/${item.student.profile_picture}`}
                                             src={item.student.profile_picture}
                                             alt="Profile"
                                             className="w-10 h-10 rounded-full object-cover border border-white"
@@ -129,7 +128,7 @@ const EnrollStudent = () => {
                                     ) : (
                                         <FaUserGraduate className="text-sky-400 w-8 h-8" />
                                     )}
-                                    {item.student.name}
+                                    {item?.student?.name || 'Unknown Student'}
                                 </h3>
                                 <span className="text-sm bg-sky-800 text-white px-2 py-1 rounded">
                                     #{index + 1}
@@ -137,21 +136,23 @@ const EnrollStudent = () => {
                             </div>
 
                             <p className="text-sm">
-                                <span className="font-semibold">Email:</span> {item.student.email}
+                                <span className="font-semibold">Email:</span> {item?.student?.email || 'N/A'}
                             </p>
                             <p className="text-sm">
-                                <span className="font-semibold">Phone:</span> {item.student.number}
+                                <span className="font-semibold">Phone:</span> {item?.student?.number || 'N/A'}
                             </p>
                             <p className="text-sm">
-                                <span className="font-semibold">Course:</span> {item.course.coursetitle}
+                                <span className="font-semibold">Course:</span> {item?.course?.coursetitle || 'Course Deleted'}
                             </p>
                             <p className="text-sm">
                                 <span className="font-semibold">Purchase Date:</span>{' '}
-                                {new Date(item.enrollment.Purchase_date).toLocaleDateString()}
+                                {item?.enrollment?.Purchase_date
+                                    ? new Date(item.enrollment.Purchase_date).toLocaleDateString()
+                                    : 'N/A'}
                             </p>
                             <p className="text-sm">
                                 <span className="font-semibold">Time Left:</span>{' '}
-                                {item.enrollment.Time_left} days
+                                {item?.enrollment?.Time_left ?? 'N/A'} days
                             </p>
                         </div>
                     ))}
