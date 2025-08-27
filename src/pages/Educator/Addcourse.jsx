@@ -204,6 +204,7 @@ const Addcourse = () => {
                             onChange={e => setThumbnail(e.target.files[0])}
                             className="block w-full file:bg-sky-600 file:text-white file:px-5 file:py-2 file:rounded-xl file:mr-3 file:font-bold border border-gray-700 text-gray-300 rounded-lg bg-gray-800/90 px-2 py-1 mt-1"
                         />
+                        <p className="block text-gray-300 text-sm mb-2">Not More than 10* MB</p>
                         {/* Thumbnail preview */}
                         {thumbnail && (
                             <div className="mt-2 flex items-center gap-3">
@@ -273,6 +274,7 @@ const Addcourse = () => {
                                     onChange={e => handleChapterVideos(idx, e.target.files)}
                                     className="w-full border border-gray-600 bg-gray-900 text-gray-200 rounded-lg px-3 py-2 file:bg-sky-500 file:text-white file:px-4 file:py-1 mt-1"
                                 />
+                                <p className="block text-gray-300 text-sm mb-2">Not More than 100* MB</p>
                                 {chapter.videos && chapter.videos.length > 0 && (
                                     <div className="flex flex-wrap gap-2 mt-2">
                                         {chapter.videos.map((video, vIdx) => (

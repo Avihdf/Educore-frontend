@@ -368,6 +368,7 @@ const CoursesEdit = () => {
                                 className="block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-sky-600 file:text-white hover:file:bg-sky-700 file:cursor-pointer cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled={isUploading}
                             />
+                            <p className="block text-gray-300 text-sm mb-2">Not More than 10* MB</p>
                             {existingThumbnail && !thumbnail && (
                                 <div className="mt-3">
                                     <p className="text-gray-400 text-sm mb-2">Current thumbnail:</p>
@@ -386,6 +387,7 @@ const CoursesEdit = () => {
                                         alt="New Preview"
                                         className="w-24 h-24 object-cover rounded-lg border-2 border-green-400"
                                     />
+                                    
                                 </div>
                             )}
                         </div>
@@ -467,12 +469,15 @@ const CoursesEdit = () => {
                                             className="block w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                             disabled={isUploading}
                                         />
+                                        <p className="block text-gray-300 text-sm mb-2">Not More than 100* MB.</p>
                                         {ch.videos && ch.videos.length > 0 && (
                                             <p className="text-green-400 text-sm mt-2">
                                                 📹 {ch.videos.length} video(s) selected
                                             </p>
                                         )}
+                                        
                                     </div>
+                                    
                                 </div>
                             ))}
 

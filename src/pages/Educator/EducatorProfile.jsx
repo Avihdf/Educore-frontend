@@ -226,6 +226,7 @@ const EducatorProfile = () => {
                         onChange={handleImageChange}
                         accept="image/*"
                     />
+                    <p className="block text-gray-300 text-sm mb-2">Not More than 5* MB</p>
                     <div className="flex justify-center items-center">
                         {previewImage && (
                             <img
