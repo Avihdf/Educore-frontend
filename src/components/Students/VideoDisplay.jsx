@@ -22,7 +22,7 @@ const VideoDisplay = ({ video, onVideoEnd }) => {
   }
 
   return (
-    <div className="w-full -mt-3.5 rounded-2xl overflow-hidden shadow-lg bg-black relative aspect-video max-h-[480px] border border-zinc-800">
+    <div className="w-full rounded-2xl overflow-hidden shadow-lg bg-black relative aspect-video max-h-[480px] border border-zinc-800">
       <video
         src={assetURL(video)}
         controls
