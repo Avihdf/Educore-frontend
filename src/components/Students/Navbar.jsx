@@ -19,6 +19,11 @@ const Edu_Navbar = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log("User state updated:", user);
+    }, [user]);
+
+
 
     const dropdownRef = useRef();
     const mobileDropdownRef = useRef();

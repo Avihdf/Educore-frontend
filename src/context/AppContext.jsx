@@ -16,6 +16,7 @@ export const AppContextProvider = ({ children }) => {
     try {
       const res = await axios.get(`${api_url}/api/userData`, { withCredentials: true });
       setUser(res.data.user);
+      console.log(res.data.user)
     } catch (err) {
       if (err.response?.status !== 401) console.error("Error fetching user data:", err);
       setUser(null);
