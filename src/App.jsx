@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes, useMatch } from 'react-router-dom'
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
 
 //Students Routes Import
 import Navbar from './components/Students/Navbar'
