@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { BsPersonFillAdd } from 'react-icons/bs';
 import googlelogo from '../../assets/images/Google-logo.png';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useauth } from '../../context/AppContext'
 
 
@@ -29,6 +29,8 @@ const Login = () => {
     const [message, setMessage] = useState(location.state?.message || '');
     const [error, seterror] = useState(location.state?.error || '')
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const api_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -210,14 +212,24 @@ const Login = () => {
                         className='text-sm text-gray-300 mt-3 '
                     >Password *</label>
 
-                    <input
-                        type="password"
-                        name='password'
-                        className="w-full max-w-md p-2.5 rounded-[10px] border-none mt-1 focus:outline-none focus:ring-1 focus:ring-sky-300 bg-gray-800 text-white"
-                        placeholder="Enter your Password"
-                        onChange={handlechange}
-                        required
-                    />
+                    <div className="relative w-full max-w-md">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            className="w-full p-2.5 pr-10 rounded-[10px] border-none mt-1 focus:outline-none focus:ring-1 focus:ring-sky-300 bg-gray-800 text-white"
+                            placeholder="Enter your Password"
+                            onChange={handlechange}
+                            required
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute inset-y-0 right-3 top-1.5 flex items-center  text-cyan-500 hover:text-cyan-600"
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
 
                     <Link className='hover:text-blue-400 ' to='/forget-password'>Forget Password?</Link>
 

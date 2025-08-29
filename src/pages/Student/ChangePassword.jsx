@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { FaCheck, FaTimes, FaPlus } from "react-icons/fa";
+import { FaCheck, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect } from "react";
 
 const api_url = import.meta.env.VITE_API_BASE_URL;
@@ -9,13 +9,17 @@ const api_url = import.meta.env.VITE_API_BASE_URL;
 const ChangePassword = () => {
     const { email } = useParams(); // coming from route like /change-password/:email
     const navigate = useNavigate();
-    const location=useLocation();
+    const location = useLocation();
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setmessage] = useState(location.state?.message || '');
     const [error, seterror] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
 
     useEffect(() => {
         if (message) {
@@ -46,8 +50,9 @@ const ChangePassword = () => {
                 { password }
             );
 
-            
-            setTimeout(() => navigate("/login",{state:{message:res.data.message}}), 2000); // redirect after success
+
+            // setTimeout(() => navigate("/login", { state: { message: res.data.message } }), 2000); // redirect after success
+            navigate("/login", { state: { message: res.data.message } })
         } catch (err) {
             seterror(
                 err.response?.data?.error ||
@@ -69,21 +74,40 @@ const ChangePassword = () => {
                     <label className="block mb-2 font-medium text-gray-300">
                         New Password
                     </label>
-                    <input
-                        type="password"
+                    {/* <input
+                         type={showPassword ? "text" : "password"}
                         placeholder="Enter new password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         className="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg 
                        focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 placeholder-gray-400"
-                    />
+                    /> */}
+                    <div className="relative w-full max-w-md">
+                        <input
+                            type={showNewPassword ? "text" : "password"}   // ✅ FIXED
+                            placeholder="Enter new password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg 
+       focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 placeholder-gray-400"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowNewPassword(!showNewPassword)}
+                            className="absolute inset-y-0 right-3 -top-3 flex items-center text-cyan-500 hover:text-cyan-600"
+                        >
+                            {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
 
                     {/* Confirm Password */}
                     <label className="block mb-2 font-medium text-gray-300">
                         Confirm Password
                     </label>
-                    <input
+                    {/* <input
                         type="password"
                         placeholder="Confirm new password"
                         value={confirmPassword}
@@ -91,7 +115,26 @@ const ChangePassword = () => {
                         required
                         className="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg 
                        focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 placeholder-gray-400"
-                    />
+                    /> */}
+                    <div className="relative w-full max-w-md">
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}   // ✅ FIXED
+                            placeholder="Confirm new password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                            className="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg 
+       focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 placeholder-gray-400"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute inset-y-0 right-3 -top-3 flex items-center text-cyan-500 hover:text-cyan-600"
+                        >
+                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
 
                     <button
                         type="submit"

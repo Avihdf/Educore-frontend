@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useauth } from '../../context/AppContext';
 import Loadingeduactor from '../../components/Educator/Loadingeduactor';
 
@@ -10,6 +10,11 @@ const EducatorProfile = () => {
     const [form, setform] = useState('form1');
     const { admin, loading, admindetails } = useauth();
     const [isUpdating, setIsUpdating] = useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
 
     const api_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -288,25 +293,76 @@ const EducatorProfile = () => {
             {form === 'form2' && (
                 <form method="post" className='flex flex-col p-10 w-full max-w-lg' onSubmit={handelpasswordSubmit} >
                     <label className='text-sm text-gray-300 '>Current Password</label>
-                    <input
+                    {/* <input
                         type="password"
                         name='current_password'
                         onChange={handlepasswordchange}
-                        className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white" /> <br />
+                        className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white" /> */}
+                    <div className="relative w-full max-w-md">
+                        <input
+                            type={showCurrentPassword ? "text" : "password"}
+                            name="current_password"
+                            onChange={handlepasswordchange}
+                            className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                            className="absolute inset-y-0 right-3 top-1.5 flex items-center text-cyan-500 hover:text-cyan-600"
+                        >
+                            {showCurrentPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
+                    <br />
 
                     <label className='text-sm text-gray-300 '>New Password</label>
-                    <input
+                    {/* <input
                         type="password"
                         name='new_password'
                         onChange={handlepasswordchange}
-                        className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white" /> <br />
+                        className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white" /> */}
+                    <div className="relative w-full max-w-md">
+                        <input
+                            type={showNewPassword ? "text" : "password"}
+                            name="new_password"
+                            onChange={handlepasswordchange}
+                            className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowNewPassword(!showNewPassword)}
+                            className="absolute inset-y-0 right-3 top-1.5 flex items-center text-cyan-500 hover:text-cyan-600"
+                        >
+                            {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
+                    <br />
 
                     <label className='text-sm text-gray-300 '>Confirm Password</label>
-                    <input
+                    {/* <input
                         type="password"
                         name='confirm_password'
                         onChange={handlepasswordchange}
-                        className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white" /> <br />
+                        className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white" /> */}
+                    <div className="relative w-full max-w-md">
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            name="confirm_password"
+                            onChange={handlepasswordchange}
+                            className="w-full max-w-md p-2.5 rounded-[10px] border-none focus:outline-none bg-gray-800 text-white"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute inset-y-0 right-3 top-1.5 flex items-center text-cyan-500 hover:text-cyan-600"
+                        >
+                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
+                    <br />
 
 
                     <button

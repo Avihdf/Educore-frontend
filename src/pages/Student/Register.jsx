@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../style/style.css';
-import { FaCheck, FaTimes, FaRegEyeSlash, FaRegEye } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 
@@ -21,6 +21,8 @@ const Register = () => {
     const [message, setmessage] = useState('')
     const [error, seterror] = useState('')
     const [loading, setloading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const Spinner = () => (
         <svg
@@ -133,14 +135,32 @@ const Register = () => {
                 <br />
 
                 <label htmlFor="password" className='text-sm text-gray-300'>Password *</label>
-                <input
+                {/* <input
                     type="password"
                     name="password"
                     className="w-full max-w-md p-3 rounded-[10px] border-none focus:outline-none focus:ring-1 focus:ring-sky-300 bg-gray-800 text-white"
                     onChange={handlechange}
                     placeholder="Enter your Password"
                     required
-                /> <br />
+                />  */}
+                <div className="relative w-full max-w-md">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        className="w-full p-2.5 pr-10 rounded-[10px] border-none mt-1 focus:outline-none focus:ring-1 focus:ring-sky-300 bg-gray-800 text-white"
+                        placeholder="Enter your Password"
+                        onChange={handlechange}
+                        required
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-3 top-1.5 flex items-center  text-cyan-500 hover:text-cyan-600"
+                    >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                </div>
+                <br />
 
                 {message && (
                     <div className="fixed top-10 left-1/2 transform -translate-x-1/2 bg-black text-white px-6 py-3 rounded-lg shadow-md border-l-4 border-green-500 flex items-center gap-2 z-50">

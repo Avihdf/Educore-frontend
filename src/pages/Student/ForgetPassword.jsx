@@ -43,8 +43,9 @@ const ForgetPassword = () => {
                     <input
                         type="email"
                         placeholder="you@example.com"
-                        value={email}
+                        value={email.toLowerCase()}
                         onChange={(e) => setEmail(e.target.value)}
+                        
                         required
                         className="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg 
                        focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 placeholder-gray-400"
