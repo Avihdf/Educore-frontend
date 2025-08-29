@@ -6,16 +6,17 @@ import { FaCheck, FaTimes } from 'react-icons/fa';
 
 const api_url = import.meta.env.VITE_API_BASE_URL;
 
-const assetURL = (path) => {
-    if (!path) return '';
-    const normalized = path.replace(/\\/g, '/'); // fix Windows slashes
-    const filename = normalized.split('/').pop(); // only filename
-    return `${api_url}/thumbnails/${filename}`;
-};
+// const assetURL = (path) => {
+//     if (!path) return '';
+//     const normalized = path.replace(/\\/g, '/'); // fix Windows slashes
+//     const filename = normalized.split('/').pop(); // only filename
+//     return `${api_url}/thumbnails/${filename}`;
+// };
 
 const Courses = () => {
     const [courselist, setcourselist] = useState([]);
     const [error, seterror] = useState('');
+   
 
     useEffect(() => {
         if (error) {
@@ -40,6 +41,7 @@ const Courses = () => {
         fetchcourselist();
     }, []);
 
+
     return (
         <div className="min-h-screen bg-black p-6 md:p-12">
 
@@ -57,7 +59,7 @@ const Courses = () => {
                         No courses found.
                     </div>
                 ) : (
-                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch">
                         {courselist.map((course) => {
                             const discountedPrice =
                                 course.discount > 0
@@ -95,9 +97,13 @@ const Courses = () => {
 
                                         {/* Details */}
                                         <div className="flex flex-col flex-1 gap-2 p-5">
-                                            <h2 className="text-xl md:text-2xl font-semibold text-white line-clamp-2">
+                                            <h2 className="font-semibold text-white line-clamp-2 min-h-[3.5rem]"
+                                                style={{
+                                                    fontSize: course.coursetitle.length > 30 ? 'clamp(0.9rem, 2vw, 1.15rem)' : 'clamp(1.125rem, 2.5vw, 1.5rem)'
+                                                }}>
                                                 {course.coursetitle}
                                             </h2>
+
 
                                             {/* Tags */}
                                             <div className="flex gap-2 mt-3">
