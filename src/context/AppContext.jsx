@@ -47,9 +47,9 @@ export const AppContextProvider = ({ children }) => {
     restoreSession();
   }, []);
 
-  if (loading) {
-    return <Loading />; // full page loader until session check completes
-  }
+  // if (loading) {
+  //   return <Loading />; // full page loader until session check completes
+  // }
 
   return (
     <AppContext.Provider value={{ user, setUser, admin, setAdmin, userdetails, admindetails, loading }}>
