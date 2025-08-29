@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import Companies from '../../components/Students/Companies';
 import Hero from '../../components/Students/Hero';
-import Courses from '../../components/Students/Courses';
+const Courses = lazy(() => import('../../components/Students/Courses'));
 
 
 const Home = () => {
@@ -83,8 +83,8 @@ const Home = () => {
 
       {/* Hero Section */}
       <Hero />
-      
-   
+
+
 
       {/* Concept Section */}
       <motion.div
@@ -119,9 +119,15 @@ const Home = () => {
         >
           Courses Offered.
         </motion.p>
-        <motion.div variants={fadeUp}>
+        {/* <motion.div variants={fadeUp}>
           <Courses />
-        </motion.div>
+        </motion.div> */}
+        <Suspense fallback={<div className="text-center py-10 text-gray-400">Loading courses...</div>}>
+          <motion.div variants={fadeUp}>
+            <Courses />
+          </motion.div>
+        </Suspense>
+
       </motion.div>
 
       {/* Companies Section */}
