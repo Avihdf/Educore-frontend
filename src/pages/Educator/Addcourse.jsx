@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaCheck, FaTimes, FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 
 const Addcourse = () => {
+
+    const navigate = useNavigate();
+
     const [coursetitle, setcoursetitle] = useState('')
     const [discription, setdiscription] = useState('')
     const [language, setlanguage] = useState('')
@@ -16,6 +20,7 @@ const Addcourse = () => {
     const [message, setmessage] = useState('')
     const [error, seterror] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
 
 
@@ -65,6 +70,7 @@ const Addcourse = () => {
         setmessage('')
         seterror('')
         setIsSubmitting(true);
+        setUploadProgress(0);
 
         const formData = new FormData()
         formData.append('coursetitle', coursetitle)
@@ -92,10 +98,16 @@ const Addcourse = () => {
         try {
             const response = await axios.post(`${api_url}/api/addcourse`, formData, {
                 withCredentials: true,
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                onUploadProgress: (progressEvent) => {
+                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(progress);
+                    // console.log(`Upload Progress: ${progress}%`);
+                }
             })
             setmessage(response.data.message)
-            console.log(response.data)
+            setUploadProgress(100);
+            navigate('/educator/courses-list', { state: { message: response.data.message } });
         } catch (err) {
             console.error(err)
             if (err.response?.status === 400 && err.response.data.errors) {
@@ -105,13 +117,100 @@ const Addcourse = () => {
             }
         } finally {
             setIsSubmitting(false); // Re-enable button
+            setUploadProgress(0);
         }
 
     }
 
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 py-10 px-3">
+
             <div className="w-full max-w-3xl bg-gray-900/95 backdrop-blur rounded-3xl shadow-2xl border border-gray-700 p-0 md:p-10 relative">
+
+                {/* Progress Bar Overlay - Only over the form container */}
+                {isSubmitting && (
+                    <div className="absolute inset-0 bg-black rounded-3xl flex items-center  justify-center z-50">
+                        <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-600 max-w-md w-full mx-4">
+                            <div className="text-center mb-6">
+                                <div className="animate-pulse">
+                                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <span className="text-white text-2xl">📤</span>
+                                    </div>
+                                </div>
+                                <h3 className="text-white text-xl font-semibold">
+                                    Adding Course
+                                </h3>
+                                <p className="text-gray-400 text-sm mt-1">
+                                    Please don't close this page
+                                </p>
+                            </div>
+
+                            {/* Progress Bar */}
+                            <div className="w-full bg-gray-700 rounded-full h-4 mb-4 overflow-hidden">
+                                <div
+                                    className="bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 h-4 rounded-full transition-all duration-500 ease-out relative"
+                                    style={{ width: `${uploadProgress}%` }}
+                                >
+                                    <div className="absolute inset-0 bg-white bg-opacity-20 animate-pulse"></div>
+                                </div>
+                            </div>
+
+                            {/* Progress Text */}
+                            <div className="flex justify-between items-center mb-4">
+                                <p className="text-gray-300 text-sm">
+                                    {uploadProgress < 100 ? 'Uploading...' : 'Processing...'}
+                                </p>
+                                <p className="text-white font-bold text-xl">
+                                    {uploadProgress}%
+                                </p>
+                            </div>
+
+                            {/* Dynamic Status Message */}
+                            <div className="text-center">
+                                {uploadProgress < 10 && (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                                        <p className="text-blue-400 text-xs">Preparing upload...</p>
+                                    </div>
+                                )}
+                                {uploadProgress >= 10 && uploadProgress < 50 && (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                                        <p className="text-purple-400 text-xs">Uploading course data...</p>
+                                    </div>
+                                )}
+                                {uploadProgress >= 50 && uploadProgress < 90 && (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                                        <p className="text-yellow-400 text-xs">Uploading videos to cloud...</p>
+                                    </div>
+                                )}
+                                {uploadProgress >= 90 && uploadProgress < 100 && (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
+                                        <p className="text-green-400 text-xs">Finalizing...</p>
+                                    </div>
+                                )}
+                                {uploadProgress === 100 && (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <FaCheck className="text-green-400" />
+                                        <p className="text-green-400 text-xs font-medium">Upload complete! Redirecting...</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Upload Speed Indicator */}
+                            <div className="mt-4 pt-4 border-t border-gray-700">
+                                <div className="flex justify-between text-xs text-gray-400">
+                                    <span>Speed: Fast</span>
+                                    <span>ETA: {uploadProgress < 50 ? '2-3 min' : 'Almost done'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+
                 <header className="mb-8 pb-4 border-b border-gray-700 flex flex-col md:flex-row items-center md:justify-between gap-3">
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-400 via-teal-400 to-green-400 bg-clip-text text-transparent">
                         Add New Course
